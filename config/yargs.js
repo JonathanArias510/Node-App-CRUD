@@ -7,16 +7,27 @@ const description = {
 
 }
 
+const completado = {
+	alias: 'c',
+	default: true,
+	desc: 'Marca de completado "true" or "false"'
+}
+
 const argv = require('yargs')
 	.command('crear',`Crea un elemento por hacer.`.cyan,
 	{
 		description,
 	})
-	.command('listar',`Lista todos los "todos".`.cyan)
+	.command('listar',`Lista todos los "todos" y filtra la lista.`.cyan,{
+		completado:{
+			alias:'c',
+			default: null
+		}
+	})
 	.command('actualizar',`Actualizar el estados de los "todos".`.cyan,
 	{
 		description,
-		completado:{
+		completado: {
 			alias: 'c',
 			default: true,
 			desc: 'Marca de completado "true" or "false"'

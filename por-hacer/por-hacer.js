@@ -61,24 +61,29 @@ let listadoPorHacer = [];
 	}
 
 // Lista todas las tareas en la DB.
-	const listar = async () => {
+	const listar = async (estado) => {
 
 		cargarDB();
 
-		if (listadoPorHacer.length == 0) {
+		if (listadoPorHacer.length === 0) {
 			throw new Error(colors.red(`Listado vacio!!`));
+		}else if(estado === 'true' || estado === true) {
 
-		} else {
+			let listadoFiltrado = listadoPorHacer.filter( tarea => tarea.completado === true)
+			return listadoFiltrado;
+		}else if (estado === 'false' || estado === false) {
 
-			for (let tarea of listadoPorHacer) {
-				console.log(colors.green('====================Por Hacer==================='));
-				console.log(`Tarea  : ${ tarea.description }`);
-				console.log(`Estado : ${ tarea.completado }`);
-				console.log(colors.green('================================================'));
-			}
+			let listadoFiltrado = listadoPorHacer.filter( tarea => tarea.completado === false)
+			return  listadoFiltrado;
+		}else {
+			return listadoPorHacer;
 		}
+
+
 	}
 
+
+// Actualiza las el estado de las tareas.
 const actualizar = async (description, completado = true) => {
 
 	cargarDB();
@@ -98,6 +103,8 @@ const actualizar = async (description, completado = true) => {
 	}
 }
 
+
+// Borra un a tarea  mediante la descripcion
 const borrar = async (description) => {
 	cargarDB();
 
@@ -120,5 +127,6 @@ module.exports = {
 	crear,
 	listar,
 	actualizar,
-	borrar
+	borrar,
+	colors
 };
